@@ -1,0 +1,13 @@
+[package]
+name = "agave-cli"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+agave = { version = "0.1.0", path = "../agave" }
+anyhow = { version = "1.0.86", features = ["backtrace"] }
+clap = { version = "4.5.6", features = ["derive", "cargo"] }
+fs-err = "2.11.0"
+itertools = "0.13.0"
