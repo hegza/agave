@@ -73,10 +73,7 @@ fn main() -> anyhow::Result<()> {
                 let doc = Document::parse(&xml)?;
 
                 let select_strs = if let Some(lines_file) = lines_file {
-                    read_file(lines_file)
-                        .lines()
-                        .map(ToOwned::to_owned)
-                        .collect_vec()
+                    parse_lines(read_file(lines_file))
                 } else {
                     panic!("must supply lines_file (for now)");
                 };
@@ -107,4 +104,17 @@ fn main() -> anyhow::Result<()> {
     }
 
     Ok(())
+}
+
+fn parse_lines(lines_file: String) -> Vec<String> {
+    lines_file
+        .lines()
+        // Remove anything and everything after first comment character
+        .map(|line| line.split('#').nth(0).unwrap())
+        // Strip whitespace
+        .map(|line| line.trim())
+        // Remove empty
+        .filter(|line| !line.is_empty())
+        .map(ToOwned::to_owned)
+        .collect_vec()
 }
